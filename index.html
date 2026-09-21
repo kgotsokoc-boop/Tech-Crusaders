@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BizLink Sign In</title>
+    <style>
+        /* General Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Mobile Container to simulate phone screen */
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            height: 850px; /* Fixed height to match phone aspect ratio */
+            background-color: white;
+            border-radius: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden; /* Clips the decorative shapes */
+            padding: 0 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Decorative Background Shapes */
+        .shape-top-right {
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 250px;
+            height: 250px;
+            background-color: #0b224c;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .shape-top-yellow {
+            position: absolute;
+            top: 40px;
+            right: -50px;
+            width: 120px;
+            height: 120px;
+            background-color: #fccf29;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        /* Bottom wave decoration */
+        .bottom-decoration {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            margin-top: 50px; /* Space for status bar */
+            z-index: 10;
+            margin-bottom: 20px;
+        }
+
+        .back-icon {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            color: #0b224c;
+        }
+
+        /* Logo Section */
+        .logo-section {
+            margin-bottom: 40px;
+            z-index: 5;
+        }
+
+        .logo-text {
+            font-size: 36px;
+            font-weight: 800;
+            color: #0b224c;
+            line-height: 1;
+        }
+
+        .logo-text span {
+            color: #fccf29;
+        }
+
+        .tagline {
+            font-size: 9px;
+            color: #0b224c;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            margin-top: 5px;
+            text-transform: uppercase;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .dot {
+            color: #fccf29;
+            font-size: 12px;
+        }
+
+        /* Header Text */
+        .welcome-header h1 {
+            font-size: 32px;
+            color: #0b224c;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .welcome-header p {
+            color: #667085;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+            z-index: 5;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #101828;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 14px 14px 45px; /* Left padding for icon */
+            border-radius: 8px;
+            border: 1px solid #EAECF0;
+            background-color: #F9FAFB;
+            font-size: 15px;
+            color: #101828;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #0b224c;
+        }
+
+        .input-wrapper input::placeholder {
+            color: #98A2B3;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            width: 20px;
+            height: 20px;
+            color: #667085;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 14px;
+            width: 20px;
+            height: 20px;
+            color: #667085;
+            cursor: pointer;
+        }
+
+        /* Forgot Password */
+        .forgot-password {
+            display: block;
+            text-align: right;
+            font-size: 14px;
+            color: #1570EF;
+            text-decoration: none;
+            margin-top: -10px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* Sign In Button */
+        .btn-primary {
+            width: 100%;
+            background-color: #0b224c;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.2s;
+            z-index: 5;
+        }
+
+        .btn-primary:hover {
+            background-color: #081a3a;
+        }
+
+        .btn-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Footer */
+        .footer-text {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #667085;
+            z-index: 5;
+        }
+
+        .footer-text a {
+            display: block;
+            color: #1570EF;
+            font-weight: 700;
+            text-decoration: none;
+            margin-top: 5px;
+            font-size: 16px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Decorative Shapes -->
+        <div class="shape-top-right"></div>
+        <div class="shape-top-yellow"></div>
+        
+        <!-- Bottom Wave SVG -->
+        <svg class="bottom-decoration" viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0 100 C 100 150, 250 50, 400 100 L 400 200 L 0 200 Z" fill="#F0F4FF"/>
+            <path d="M-50 180 C 50 120, 150 160, 250 180 L 250 200 L -50 200 Z" fill="#fccf29" opacity="0.9"/>
+        </svg>
+
+        <!-- Back Arrow -->
+        <div class="top-nav">
+            <svg class="back-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+        </div>
+
+        <!-- Logo -->
+        <div class="logo-section">
+            <div class="logo-text">Biz<span>Link</span></div>
+            <div class="tagline">
+                CONNECT <span class="dot">•</span> GROW <span class="dot">•</span> MOVE TOGETHER
+            </div>
+        </div>
+
+        <!-- Welcome Text -->
+        <div class="welcome-header">
+            <h1>Welcome back</h1>
+            <p>Sign in to your BizLink account</p>
+        </div>
+
+        <!-- Form -->
+        <form>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <div class="input-wrapper">
+                    <!-- Email Icon -->
+                    <svg class="input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                    <input type="email" id="email" placeholder="you@example.com">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <!-- Lock Icon -->
+                    <svg class="input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                    <input type="password" id="password" placeholder="Enter your password">
+                    <!-- Eye Icon (Show/Hide Password) -->
+                    <svg class="password-toggle" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <a href="#" class="forgot-password">Forgot password?</a>
+
+            <button type="submit" class="btn-primary">
+                Sign In
+                <!-- Arrow Right Icon -->
+                <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+            </button>
+        </form>
+
+        <!-- Footer -->
+        <div class="footer-text">
+            Don't have an account?
+            <a href="#">Sign up</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
