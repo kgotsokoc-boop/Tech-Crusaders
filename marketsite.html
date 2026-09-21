@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose what you need • Spaza</title>
+    <!-- Font for clean look (Inter, similar to the screenshot) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for small icons (optional, but used for chevron) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f7fb;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 24px;
+            color: #1a1e2b;
+        }
+
+        /* two-column layout */
+        .app {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 24px;
+            max-width: 1120px;
+            width: 100%;
+        }
+
+        /* MAIN CARD (left) */
+        .main-card {
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.02);
+            padding: 28px 26px 32px 26px;
+            border: 1px solid #eaedf2;
+        }
+
+        /* stepper */
+        .stepper {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b95a6;
+            letter-spacing: 0.3px;
+        }
+
+        .step.active .step-number {
+            background: #0a66c2;
+            color: white;
+            font-weight: 600;
+        }
+
+        .step.active .step-label {
+            color: #0a1e3c;
+            font-weight: 600;
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            background: #eef1f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #566174;
+        }
+
+        .step-label {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.4px;
+        }
+
+        /* heading */
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+            color: #0b1b33;
+        }
+
+        .description {
+            color: #59657a;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 28px;
+            max-width: 90%;
+        }
+
+        /* product list */
+        .product-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 22px;
+            background: #ffffff;
+            border: 1.5px solid #e7ebf2;
+            border-radius: 20px;
+            transition: all 0.1s ease;
+            cursor: default;
+        }
+
+        .product-item.selected {
+            border-color: #0a66c2;
+            background: #f4f9ff;
+            box-shadow: 0 2px 8px rgba(10, 102, 194, 0.08);
+        }
+
+        .product-info h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 4px;
+            color: #0b1b33;
+        }
+
+        .product-meta {
+            font-size: 0.85rem;
+            color: #6f7b8f;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .product-meta i {
+            font-size: 0.7rem;
+            color: #a5b1c2;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0b1b33;
+            margin-right: 16px;
+        }
+
+        .btn-select {
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 1.5px solid #d0d8e4;
+            background: white;
+            color: #1e2b3c;
+            cursor: default;
+            transition: 0.1s;
+            white-space: nowrap;
+        }
+
+        .btn-select.selected-state {
+            background: #0a66c2;
+            border-color: #0a66c2;
+            color: white;
+            box-shadow: 0 2px 6px rgba(10, 102, 194, 0.3);
+        }
+
+        /* confirm area */
+        .confirm-card {
+            background: #f9fbfe;
+            border: 1.5px solid #e2e9f2;
+            border-radius: 24px;
+            padding: 22px 24px 18px 24px;
+            margin-bottom: 28px;
+        }
+
+        .confirm-card h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 8px;
+            color: #0b1b33;
+        }
+
+        .confirm-text {
+            color: #5c6a81;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .confirm-text strong {
+            color: #0a66c2;
+            font-weight: 700;
+        }
+
+        /* action buttons */
+        .action-buttons {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #0a66c2;
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 14px 32px;
+            border-radius: 14px;
+            letter-spacing: 0.2px;
+            cursor: default;
+            transition: 0.1s;
+            box-shadow: 0 4px 12px rgba(10, 102, 194, 0.25);
+        }
+
+        .btn-primary:hover {
+            background: #0b5cb0;
+        }
+
+        .btn-secondary {
+            background: white;
+            border: 1.5px solid #d0d8e4;
+            color: #1e2b3c;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 14px 28px;
+            border-radius: 14px;
+            cursor: default;
+            transition: 0.1s;
+        }
+
+        .btn-secondary:hover {
+            background: #f9fbfe;
+        }
+
+        /* RIGHT SIDEBAR (summary) */
+        .summary-card {
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.02);
+            padding: 28px 24px 24px 24px;
+            border: 1px solid #eaedf2;
+            height: fit-content;
+        }
+
+        .summary-card h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+            color: #0b1b33;
+        }
+
+        .pickup-detail {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            color: #6d798e;
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .pickup-detail i {
+            font-size: 0.75rem;
+            color: #a0adc0;
+        }
+
+        /* summary rows */
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            padding: 9px 0;
+            color: #2b3649;
+            font-weight: 500;
+        }
+
+        .summary-row.total-row {
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding-top: 12px;
+            margin-top: 6px;
+            border-top: 1px solid #e7ebf2;
+            color: #0b1b33;
+        }
+
+        .summary-row .value {
+            font-weight: 600;
+            color: #0b1b33;
+        }
+
+        .summary-row.total-row .value {
+            font-weight: 700;
+            color: #0b1b33;
+        }
+
+        /* shared route box */
+        .shared-route {
+            background: #e6f7ee;
+            border-radius: 18px;
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 22px 0 14px 0;
+            border: 1px solid #cbebd9;
+        }
+
+        .shared-route-text {
+            font-weight: 700;
+            color: #0a6b4a;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge-nearby {
+            background: #d3f0e2;
+            color: #0a6b4a;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 4px 12px;
+            border-radius: 40px;
+            white-space: nowrap;
+        }
+
+        .shared-note {
+            font-size: 0.9rem;
+            color: #5f6f84;
+            line-height: 1.5;
+            margin-top: 14px;
+        }
+
+        /* responsive */
+        @media (max-width: 900px) {
+            .app {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .description {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 500px) {
+            body {
+                padding: 12px;
+            }
+            .main-card, .summary-card {
+                padding: 20px 18px;
+                border-radius: 22px;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            .product-item {
+                flex-wrap: wrap;
+                gap: 12px;
+                padding: 16px;
+            }
+            .product-price {
+                margin-left: auto;
+            }
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+            .action-buttons {
+                flex-direction: column-reverse;
+                align-items: stretch;
+            }
+        }
+
+        /* small helper for spacing / icon alignment */
+        .icon-faint {
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app">
+    <!-- LEFT PANEL: product selection & confirm -->
+    <div class="main-card">
+        <!-- stepper -->
+        <div class="stepper">
+            <div class="step active">
+                <span class="step-number">1</span>
+                <span class="step-label">Select</span>
+            </div>
+            <div class="step">
+                <span class="step-number">2</span>
+                <span class="step-label">Confirm</span>
+            </div>
+            <div class="step">
+                <span class="step-number">3</span>
+                <span class="step-label">Delivery</span>
+            </div>
+        </div>
+
+        <h1>Choose what you need</h1>
+        <p class="description">
+            Pick a product, confirm it, and decide whether you want to split the delivery fee with nearby orders.
+        </p>
+
+        <!-- product list -->
+        <div class="product-list">
+            <!-- selected product: Bread loaf -->
+            <div class="product-item selected">
+                <div class="product-info">
+                    <h3>Bread loaf</h3>
+                    <div class="product-meta">
+                        Thandi's Spaza <i class="fas fa-circle"></i> Groceries
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span class="product-price">R 25</span>
+                    <span class="btn-select selected-state">Selected</span>
+                </div>
+            </div>
+
+            <!-- Cooking oil 750ml -->
+            <div class="product-item">
+                <div class="product-info">
+                    <h3>Cooking oil 750ml</h3>
+                    <div class="product-meta">
+                        Thandi's Spaza <i class="fas fa-circle"></i> Groceries
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span class="product-price">R 35</span>
+                    <span class="btn-select">Select</span>
+                </div>
+            </div>
+
+            <!-- Maize meal 10kg -->
+            <div class="product-item">
+                <div class="product-info">
+                    <h3>Maize meal 10kg</h3>
+                    <div class="product-meta">
+                        Thandi's Spaza <i class="fas fa-circle"></i> Groceries
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span class="product-price">R 60</span>
+                    <span class="btn-select">Select</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- confirm product block -->
+        <div class="confirm-card">
+            <h2>Confirm product</h2>
+            <div class="confirm-text">
+                You are about to confirm: <strong>Bread loaf for R 25.</strong>
+            </div>
+        </div>
+
+        <!-- action buttons -->
+        <div class="action-buttons">
+            <button class="btn-primary">Confirm product</button>
+            <button class="btn-secondary">Back</button>
+        </div>
+    </div>
+
+    <!-- RIGHT PANEL: order summary -->
+    <div class="summary-card">
+        <h2>Order summary</h2>
+        <div class="pickup-detail">
+            <span>Pickup from Thandi's Spaza</span>
+            <i class="fas fa-circle" style="font-size: 0.3rem;"></i>
+            <span>0.4 km away</span>
+        </div>
+
+        <!-- selected item row -->
+        <div class="summary-row">
+            <span>Selected item</span>
+            <span class="value">Bread loaf</span>
+        </div>
+        <div class="summary-row">
+            <span>Product total</span>
+            <span class="value">R 25</span>
+        </div>
+        <div class="summary-row">
+            <span>Delivery fee</span>
+            <span class="value">R 18</span>
+        </div>
+        <div class="summary-row total-row">
+            <span>Estimated total</span>
+            <span class="value">R 43</span>
+        </div>
+
+        <!-- shared route available -->
+        <div class="shared-route">
+            <div class="shared-route-text">
+                <i class="fas fa-route" style="font-size: 0.9rem;"></i> Shared route available
+            </div>
+            <span class="badge-nearby">3 nearby</span>
+        </div>
+
+        <div class="shared-note">
+            Customers nearby can join your route and share the delivery fee.
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

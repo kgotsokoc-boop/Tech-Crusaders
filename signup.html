@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BizLink · Create your account</title>
+    <!-- Google Font for clean, modern look (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        /* --- global reset & base --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 16px;
+            line-height: 1.4;
+            color: #0b1e3a;
+        }
+
+        /* --- mobile container (matches image) --- */
+        .phone-frame {
+            width: 100%;
+            max-width: 420px;
+            height: 850px;
+            background: #ffffff;
+            border-radius: 44px;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2), 0 8px 20px -8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 0 28px;
+        }
+
+        /* --- decorative shapes (exact positions) --- */
+        /* top-right light blue circle */
+        .shape-top-right-light {
+            position: absolute;
+            top: -70px;
+            right: -70px;
+            width: 220px;
+            height: 220px;
+            background: #d9e8ff;
+            border-radius: 50%;
+            z-index: 1;
+            opacity: 0.7;
+        }
+
+        /* top-right yellow circle */
+        .shape-top-right-yellow {
+            position: absolute;
+            top: -20px;
+            right: -40px;
+            width: 150px;
+            height: 150px;
+            background: #fccf29;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        /* bottom-left dark blue circle */
+        .shape-bottom-left-dark {
+            position: absolute;
+            bottom: -60px;
+            left: -60px;
+            width: 180px;
+            height: 180px;
+            background: #0b224c;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        /* bottom-left yellow circle */
+        .shape-bottom-left-yellow {
+            position: absolute;
+            bottom: -40px;
+            left: -30px;
+            width: 120px;
+            height: 120px;
+            background: #fccf29;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        /* --- scrollable content --- */
+        .scroll-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-top: 50px;
+            padding-bottom: 30px;
+            position: relative;
+            z-index: 5;
+            scrollbar-width: none; /* firefox */
+        }
+
+        .scroll-content::-webkit-scrollbar {
+            display: none; /* chrome */
+        }
+
+        /* --- back arrow --- */
+        .back-arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            margin-bottom: 16px;
+            cursor: default;
+            color: #0b224c;
+        }
+
+        .back-arrow svg {
+            width: 22px;
+            height: 22px;
+            stroke-width: 2.2;
+        }
+
+        /* --- logo --- */
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            color: #0b224c;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        .logo span {
+            color: #fccf29;
+        }
+
+        .tagline {
+            font-size: 8px;
+            font-weight: 600;
+            color: #0b224c;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            opacity: 0.75;
+            margin-bottom: 28px;
+        }
+
+        /* --- headings --- */
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0b1e3a;
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+
+        .subhead {
+            font-size: 15px;
+            color: #3f4e66;
+            line-height: 1.45;
+            margin-bottom: 28px;
+            max-width: 95%;
+        }
+
+        /* --- form groups --- */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #0b1e3a;
+            margin-bottom: 6px;
+            letter-spacing: -0.01em;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper .field-icon {
+            position: absolute;
+            left: 14px;
+            width: 20px;
+            height: 20px;
+            color: #6b7a90;
+            pointer-events: none;
+            flex-shrink: 0;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 14px 14px 46px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            border: 1.5px solid #dce2eb;
+            border-radius: 12px;
+            background: #ffffff;
+            color: #0b1e3a;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .input-wrapper input::placeholder {
+            color: #9aa8bb;
+            font-weight: 400;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #0b224c;
+            box-shadow: 0 0 0 4px rgba(11, 34, 76, 0.08);
+        }
+
+        .input-wrapper input:focus + .field-icon {
+            color: #0b224c;
+        }
+
+        /* password toggle */
+        .password-toggle {
+            position: absolute;
+            right: 14px;
+            width: 22px;
+            height: 22px;
+            color: #6b7a90;
+            cursor: default;
+            z-index: 2;
+            transition: color 0.15s;
+        }
+
+        .password-toggle:hover {
+            color: #0b224c;
+        }
+
+        /* --- password checklist --- */
+        .password-checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 12px;
+            margin-bottom: 6px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #5a6b82;
+            font-weight: 400;
+        }
+
+        .check-item .circle {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #cdd6e3;
+            border-radius: 50%;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .check-item .circle.checked {
+            border-color: #0b224c;
+            background: #0b224c;
+        }
+
+        .check-item .circle.checked::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 6px;
+            height: 6px;
+            background: #ffffff;
+            border-radius: 50%;
+        }
+
+        /* --- account type selector --- */
+        .account-type-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 6px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+
+        .account-type-option {
+            flex: 1;
+            min-width: 100px;
+            border: 1.5px solid #dce2eb;
+            border-radius: 14px;
+            padding: 16px 12px 14px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: default;
+            transition: border-color 0.15s, background 0.15s;
+            position: relative;
+        }
+
+        .account-type-option.selected {
+            border-color: #0b224c;
+            background: #f0f4fe;
+        }
+
+        .account-type-option .type-icon {
+            width: 28px;
+            height: 28px;
+            margin-bottom: 8px;
+            color: #0b224c;
+            stroke-width: 1.6;
+        }
+
+        .account-type-option .type-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0b1e3a;
+            line-height: 1.2;
+            margin-bottom: 4px;
+        }
+
+        .account-type-option .type-desc {
+            font-size: 11px;
+            color: #5a6b82;
+            line-height: 1.3;
+            font-weight: 400;
+        }
+
+        /* selection indicator (circle) */
+        .account-type-option .select-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid #cdd6e3;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.15s, background 0.15s;
+        }
+
+        .account-type-option.selected .select-indicator {
+            border-color: #0b224c;
+            background: #0b224c;
+        }
+
+        .account-type-option.selected .select-indicator::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #ffffff;
+            border-radius: 50%;
+        }
+
+        /* --- terms checkbox --- */
+        .terms-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: #2b3a53;
+            line-height: 1.4;
+        }
+
+        .terms-row input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            accent-color: #0b224c;
+            border-radius: 4px;
+            flex-shrink: 0;
+            cursor: default;
+        }
+
+        .terms-row a {
+            color: #0b224c;
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            cursor: default;
+        }
+
+        /* --- primary button --- */
+        .btn-create {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            background: #0b224c;
+            border: none;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 17px;
+            padding: 18px 20px;
+            border-radius: 14px;
+            cursor: default;
+            transition: background 0.2s, transform 0.1s;
+            letter-spacing: -0.01em;
+            margin-bottom: 24px;
+        }
+
+        .btn-create svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2.2;
+        }
+
+        /* --- sign in prompt --- */
+        .signin-prompt {
+            text-align: center;
+            font-size: 15px;
+            color: #3f4e66;
+            padding-bottom: 8px;
+        }
+
+        .signin-prompt a {
+            color: #0b224c;
+            font-weight: 700;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            cursor: default;
+        }
+
+        /* --- focus visible for accessibility --- */
+        .btn-create:focus-visible,
+        .signin-prompt a:focus-visible,
+        .terms-row a:focus-visible,
+        .account-type-option:focus-visible,
+        input:focus-visible {
+            outline: 2px solid #0b224c;
+            outline-offset: 2px;
+        }
+
+        /* --- responsive fine-tune --- */
+        @media (max-width: 420px) {
+            .phone-frame {
+                height: 100vh;
+                border-radius: 0;
+                max-width: 100%;
+                padding: 0 20px;
+            }
+            body {
+                padding: 0;
+            }
+            .scroll-content {
+                padding-top: 40px;
+            }
+            h1 {
+                font-size: 26px;
+            }
+            .account-type-group {
+                gap: 8px;
+            }
+            .account-type-option {
+                padding: 12px 8px 10px;
+                min-width: 80px;
+            }
+            .account-type-option .type-label {
+                font-size: 12px;
+            }
+            .account-type-option .type-desc {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-frame">
+        <!-- decorative shapes (behind content) -->
+        <div class="shape-top-right-light"></div>
+        <div class="shape-top-right-yellow"></div>
+        <div class="shape-bottom-left-dark"></div>
+        <div class="shape-bottom-left-yellow"></div>
+
+        <!-- scrollable main content -->
+        <div class="scroll-content">
+
+            <!-- back arrow -->
+            <div class="back-arrow" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+            </div>
+
+            <!-- logo & tagline -->
+            <div class="logo">Biz<span>Link</span></div>
+            <div class="tagline">Local business. Connected.</div>
+
+            <!-- heading -->
+            <h1>Create your account</h1>
+            <p class="subhead">Join BizLink and be part of a stronger local business community.</p>
+
+            <!-- form -->
+            <form id="signupForm" onsubmit="return false;">
+
+                <!-- full name -->
+                <div class="form-group">
+                    <label for="fullname">Full name</label>
+                    <div class="input-wrapper">
+                        <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" autocomplete="name">
+                    </div>
+                </div>
+
+                <!-- email -->
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <div class="input-wrapper">
+                        <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect>
+                            <polyline points="3 7 12 13 21 7"></polyline>
+                        </svg>
+                        <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email">
+                    </div>
+                </div>
+
+                <!-- phone number -->
+                <div class="form-group">
+                    <label for="phone">Phone number</label>
+                    <div class="input-wrapper">
+                        <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        <input type="tel" id="phone" name="phone" placeholder="e.g. 071 234 5678" autocomplete="tel">
+                    </div>
+                </div>
+
+                <!-- password -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        <input type="password" id="password" name="password" placeholder="Create a password" autocomplete="new-password">
+                        <!-- eye toggle (static, not functional) -->
+                        <svg class="password-toggle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <line x1="3" y1="3" x2="21" y2="21"></line>
+                        </svg>
+                    </div>
+
+                    <!-- password checklist -->
+                    <div class="password-checklist">
+                        <div class="check-item">
+                            <span class="circle"></span>
+                            At least 8 characters
+                        </div>
+                        <div class="check-item">
+                            <span class="circle"></span>
+                            Include a letter and a number
+                        </div>
+                        <div class="check-item">
+                            <span class="circle"></span>
+                            Include a special character (e.g. ! @ #)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- account type -->
+                <div class="form-group">
+                    <label>Account type</label>
+                    <div class="account-type-group">
+
+                        <!-- Business (selected) -->
+                        <div class="account-type-option selected" tabindex="0" role="radio" aria-checked="true">
+                            <span class="select-indicator"></span>
+                            <svg class="type-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                            <span class="type-label">Business</span>
+                            <span class="type-desc">Sell products or services</span>
+                        </div>
+
+                        <!-- Customer -->
+                        <div class="account-type-option" tabindex="0" role="radio" aria-checked="false">
+                            <span class="select-indicator"></span>
+                            <svg class="type-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            <span class="type-label">Customer</span>
+                            <span class="type-desc">Buy from local businesses</span>
+                        </div>
+
+                        <!-- Delivery Partner -->
+                        <div class="account-type-option" tabindex="0" role="radio" aria-checked="false">
+                            <span class="select-indicator"></span>
+                            <svg class="type-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="1" y="3" width="15" height="13" rx="1"></rect>
+                                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                            </svg>
+                            <span class="type-label">Delivery Partner</span>
+                            <span class="type-desc">Deliver products in your area</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- terms & conditions -->
+                <div class="terms-row">
+                    <input type="checkbox" id="terms" checked>
+                    <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                </div>
+
+                <!-- create account button -->
+                <button type="submit" class="btn-create" aria-label="Create Account">
+                    Create Account
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
+
+                <!-- sign in prompt -->
+                <div class="signin-prompt">
+                    Already have an account? <a href="index.html">Sign in</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
