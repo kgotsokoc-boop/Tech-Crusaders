@@ -1,405 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Forgot Password · Reset your password</title>
-  <!-- Google Font & simple CSS reset -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(145deg, #f5f7ff 0%, #eef1fa 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      line-height: 1.5;
-      color: #1a1e2b;
-    }
-
-    /* main card */
-    .reset-card {
-      background-color: #ffffff;
-      max-width: 460px;
-      width: 100%;
-      border-radius: 2rem;
-      box-shadow: 0 20px 35px -8px rgba(0, 20, 50, 0.12), 0 8px 18px -6px rgba(0, 0, 0, 0.05);
-      padding: 2.5rem 2rem 2.5rem 2rem;
-      transition: transform 0.2s ease;
-    }
-
-    .reset-card:hover {
-      box-shadow: 0 25px 40px -12px rgba(0, 30, 70, 0.18);
-    }
-
-    /* header */
-    .icon-circle {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: #eef3fe;
-      width: 3.5rem;
-      height: 3.5rem;
-      border-radius: 1.2rem;
-      margin-bottom: 1.5rem;
-      color: #1e4bd2;
-    }
-
-    .icon-circle svg {
-      width: 1.8rem;
-      height: 1.8rem;
-      stroke-width: 1.8;
-    }
-
-    h1 {
-      font-size: 1.85rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: #0b1220;
-      margin-bottom: 0.6rem;
-    }
-
-    .subhead {
-      font-size: 0.98rem;
-      color: #4f5a6b;
-      margin-bottom: 2rem;
-      font-weight: 400;
-    }
-
-    /* form */
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    label {
-      display: block;
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: #1e2636;
-      margin-bottom: 0.45rem;
-      letter-spacing: -0.01em;
-    }
-
-    .input-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .input-wrapper svg {
-      position: absolute;
-      left: 1rem;
-      width: 1.2rem;
-      height: 1.2rem;
-      color: #7a8699;
-      pointer-events: none;
-      transition: color 0.15s;
-    }
-
-    input[type="email"] {
-      width: 100%;
-      padding: 0.9rem 1rem 0.9rem 2.9rem;
-      font-size: 0.98rem;
-      font-family: 'Inter', sans-serif;
-      border: 1.5px solid #dfe4ed;
-      border-radius: 1rem;
-      background: #fafbff;
-      outline: none;
-      transition: border 0.2s, box-shadow 0.2s, background 0.15s;
-      color: #0f172a;
-      font-weight: 400;
-    }
-
-    input[type="email"]:focus {
-      border-color: #1e4bd2;
-      background: #ffffff;
-      box-shadow: 0 0 0 4px rgba(30, 75, 210, 0.12);
-    }
-
-    input[type="email"]:focus + svg {
-      color: #1e4bd2;
-    }
-
-    input[type="email"]::placeholder {
-      color: #a2adc0;
-      font-weight: 400;
-    }
-
-    /* button */
-    .btn-primary {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      width: 100%;
-      background: #1e4bd2;
-      border: none;
-      color: white;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      font-size: 1rem;
-      padding: 0.9rem 1.5rem;
-      border-radius: 1rem;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
-      box-shadow: 0 6px 14px -4px rgba(30, 75, 210, 0.35);
-      margin-bottom: 1.4rem;
-      letter-spacing: -0.01em;
-    }
-
-    .btn-primary:hover {
-      background: #133db8;
-      box-shadow: 0 10px 18px -6px rgba(30, 75, 210, 0.45);
-    }
-
-    .btn-primary:active {
-      transform: scale(0.98);
-      background: #0f349e;
-      box-shadow: 0 4px 10px -3px rgba(30, 75, 210, 0.4);
-    }
-
-    .btn-primary svg {
-      width: 1.1rem;
-      height: 1.1rem;
-    }
-
-    /* message / feedback */
-    .feedback {
-      font-size: 0.88rem;
-      padding: 0.75rem 1rem;
-      border-radius: 0.9rem;
-      margin: 1rem 0 0.5rem;
-      display: none;
-      align-items: center;
-      gap: 0.5rem;
-      font-weight: 500;
-    }
-
-    .feedback.success {
-      display: flex;
-      background: #e3f5ea;
-      color: #0a6b3c;
-      border-left: 4px solid #17a45c;
-    }
-
-    .feedback.error {
-      display: flex;
-      background: #fef0f0;
-      color: #b3261e;
-      border-left: 4px solid #d93b2b;
-    }
-
-    .feedback svg {
-      width: 1.2rem;
-      height: 1.2rem;
-      flex-shrink: 0;
-    }
-
-    /* back to sign in */
-    .back-link {
-      text-align: center;
-      margin-top: 1.8rem;
-      font-size: 0.95rem;
-      color: #4f5a6b;
-      border-top: 1px solid #e7ecf5;
-      padding-top: 1.6rem;
-    }
-
-    .back-link a {
-      color: #1e4bd2;
-      font-weight: 500;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      transition: color 0.15s;
-    }
-
-    .back-link a:hover {
-      color: #0f349e;
-      text-decoration: underline;
-    }
-
-    .back-link svg {
-      width: 1rem;
-      height: 1rem;
-    }
-
-    /* helper for empty state (dev) */
-    .note {
-      font-size: 0.78rem;
-      color: #8896aa;
-      text-align: center;
-      margin-top: 1.2rem;
-      opacity: 0.8;
-    }
-
-    /* subtle focus visible outline for accessibility */
-    .btn-primary:focus-visible,
-    .back-link a:focus-visible,
-    input:focus-visible {
-      outline: 2px solid #1e4bd2;
-      outline-offset: 2px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reset password — BizLink</title>
+<link rel="stylesheet" href="styles.css" />
+<style>*
+  .fp { flex: 1; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; background: #fff; position: relative; color: var(--slate-900);
+        --amber:#f59e0b; --line:#e2e8f0; --ok:#059669; --err:#dc2626; }
+  .fp-inner { position: relative; min-height: 100%; padding: 22px 24px 36px; overflow: hidden; }
+  .fp-blob1 { position:absolute; top:-50px; right:-50px; width:170px; height:170px; background:var(--navy); border-radius:50%; }
+  .fp-blob2 { position:absolute; top:40px; right:-24px; width:96px; height:96px; background:#fbbf24; border-radius:50%; }
+  .fp-body { position: relative; z-index: 1; }
+  .fp-back { display:inline-block; color:#334155; text-decoration:none; font-size:13px; font-weight:700; padding:8px 10px 8px 0; margin-top:8px; }
+  .fp-logo { font-weight:900; font-size:26px; letter-spacing:-.5px; margin-top:14px; }
+  .fp-logo b { color:var(--amber); } .fp-logo span { color:var(--navy); }
+  .fp h1 { font-size:22px; font-weight:900; margin:22px 0 6px; }
+  .fp p.fp-sub { color:var(--slate-500); font-size:13px; line-height:1.5; margin:0 0 18px; }
+  .fp label { display:block; font-size:12px; font-weight:700; margin-bottom:6px; }
+  .fp input[type=email], .fp input[type=password], .fp input[type=text] { width:100%; padding:12px 14px; border:1px solid var(--line); background:#f8fafc; border-radius:12px; font-size:14px; outline:none; }
+  .fp input:focus { border-color:var(--navy); background:#fff; box-shadow:0 0 0 3px rgba(0,43,102,.12); }
+  .fp-btn { display:block; width:100%; margin-top:16px; padding:13px; border-radius:12px; background:var(--navy); color:#fff; font-weight:800; font-size:14px; text-decoration:none; text-align:center; }
+  .fp-btn:hover { background:var(--navy-dark); }
+  .fp-btn:disabled { opacity:.55; cursor:not-allowed; }
+  .fp-link { color:#2563eb; font-weight:700; font-size:13px; }
+  .fp-link:disabled { color:#94a3b8; cursor:not-allowed; }
+  .fp-msg { display:none; font-size:13px; border-radius:10px; padding:10px 12px; margin-top:14px; line-height:1.45; text-align:left; }
+  .fp-msg.show { display:block; }
+  .fp-msg.err { background:#fef2f2; color:var(--err); border:1px solid #fecaca; }
+  .fp-msg.ok { background:#ecfdf5; color:var(--ok); border:1px solid #a7f3d0; }
+  .fp-msg.info { background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; }
+  .fp-step { display:none; } .fp-step.active { display:block; }
+  .fp-codes { display:flex; gap:7px; justify-content:space-between; }
+  .fp-codes input { width:100%; max-width:46px; height:52px; text-align:center; font-size:21px; font-weight:800; padding:0 !important; }
+  .fp-row { display:flex; justify-content:space-between; align-items:center; margin-top:14px; font-size:12px; color:var(--slate-500); }
+  .fp-rules { list-style:none; margin:10px 0 0; font-size:12px; color:var(--slate-500); }
+  .fp-rules li { display:flex; gap:8px; align-items:center; margin:4px 0; }
+  .fp-rules li::before { content:""; width:10px; height:10px; border-radius:50%; border:1px solid #cbd5e1; flex-shrink:0; }
+  .fp-rules li.ok { color:var(--ok); } .fp-rules li.ok::before { background:var(--ok); border-color:var(--ok); }
+  .fp-pw { position:relative; } .fp-pw button { position:absolute; right:10px; top:10px; color:#64748b; font-size:12px; font-weight:700; }
+  .fp-field { margin-bottom:14px; }
+  .fp-done { text-align:center; padding-top:16px; }
+  .fp-tick { width:72px; height:72px; border-radius:50%; background:#d1fae5; color:var(--ok); font-size:36px; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; }
+  .fp-progress { display:flex; gap:6px; margin-top:16px; }
+  .fp-progress span { height:4px; flex:1; background:var(--line); border-radius:4px; }
+  .fp-progress span.on { background:var(--navy); }
+  .fp-note { font-size:11px; color:#94a3b8; margin-top:22px; line-height:1.5; }
+</style>
 </head>
 <body>
-  <div class="reset-card">
-    <!-- icon -->
-    <div class="icon-circle" aria-hidden="true">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M16 12v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2" />
-        <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
-        <path d="M18 10v4" />
-        <path d="M20 12h-4" />
-      </svg>
+<main class="app-shell">
+  <div class="phone-frame">
+    <div class="phone-statusbar">
+      <span>9:41</span>
+      <span class="notch"></span>
+      <span class="status-icons"><span>▂▄▆</span><span class="battery"></span></span>
     </div>
 
-    <h1>Forgot password?</h1>
-    <p class="subhead">No worries, we'll send you reset instructions.</p>
+    <div class="screen">
+      <div class="fp">
+        <div class="fp-inner">
+          <div class="fp-blob1"></div><div class="fp-blob2"></div>
+          <div class="fp-body">
+            <a class="fp-back" href="index.html">Back to sign in</a>
+            <div class="fp-logo"><b>Biz</b><span>Link</span></div>
+            <div class="fp-progress" aria-hidden="true"><span id="p1" class="on"></span><span id="p2"></span><span id="p3"></span></div>
 
-    <!-- main form -->
-    <form id="resetForm" action="#" method="post" novalidate>
-      <div class="form-group">
-        <label for="email">Email address</label>
-        <div class="input-wrapper">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect>
-            <polyline points="3 7 12 13 21 7"></polyline>
-          </svg>
-          <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            <!-- STEP 1: email -->
+            <section class="fp-step active" id="step-email">
+              <h1>Forgot password?</h1>
+              <p class="fp-sub">Enter the email linked to your account. We'll send a 6-digit verification code to confirm it's really you.</p>
+              <form id="email-form" novalidate>
+                <label for="email">Email address</label>
+                <input id="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+                <div class="fp-msg" id="email-msg"></div>
+                <button class="fp-btn" id="send-btn" type="submit">Send verification code</button>
+              </form>
+            </section>
+
+            <!-- STEP 2: code -->
+            <section class="fp-step" id="step-code">
+              <h1>Check your email</h1>
+              <p class="fp-sub">If an account exists for <strong id="masked-email"></strong>, a 6-digit code is on its way. It expires in <span id="exp-min"></span> minutes.</p>
+              <form id="code-form" novalidate>
+                <label for="c0">Verification code</label>
+                <div class="fp-codes" id="codes">
+                  <input id="c0" inputmode="numeric" maxlength="1" autocomplete="one-time-code" aria-label="Digit 1" />
+                  <input inputmode="numeric" maxlength="1" aria-label="Digit 2" />
+                  <input inputmode="numeric" maxlength="1" aria-label="Digit 3" />
+                  <input inputmode="numeric" maxlength="1" aria-label="Digit 4" />
+                  <input inputmode="numeric" maxlength="1" aria-label="Digit 5" />
+                  <input inputmode="numeric" maxlength="1" aria-label="Digit 6" />
+                </div>
+                <div class="fp-msg" id="code-msg"></div>
+                <button class="fp-btn" id="verify-btn" type="submit">Verify code</button>
+              </form>
+              <div class="fp-row">
+                <span>Didn't get it? Check spam.</span>
+                <button class="fp-link" id="resend-btn" type="button">Resend code</button>
+              </div>
+              <div class="fp-row"><button class="fp-link" id="change-email" type="button">Use a different email</button></div>
+            </section>
+
+            <!-- STEP 3: new password -->
+            <section class="fp-step" id="step-reset">
+              <h1>Create new password</h1>
+              <p class="fp-sub">Choose a strong password you don't use anywhere else.</p>
+              <form id="reset-form" novalidate>
+                <div class="fp-field">
+                  <label for="pw1">New password</label>
+                  <div class="fp-pw"><input id="pw1" type="password" autocomplete="new-password" required /><button type="button" data-toggle="pw1">Show</button></div>
+                  <ul class="fp-rules" id="rules">
+                    <li data-r="len">At least 8 characters</li>
+                    <li data-r="letter">Includes a letter</li>
+                    <li data-r="num">Includes a number</li>
+                    <li data-r="sym">Includes a special character (! @ # …)</li>
+                  </ul>
+                </div>
+                <div class="fp-field">
+                  <label for="pw2">Confirm password</label>
+                  <div class="fp-pw"><input id="pw2" type="password" autocomplete="new-password" required /><button type="button" data-toggle="pw2">Show</button></div>
+                </div>
+                <div class="fp-msg" id="reset-msg"></div>
+                <button class="fp-btn" id="reset-btn" type="submit">Reset password</button>
+              </form>
+            </section>
+
+            <!-- DONE -->
+            <section class="fp-step" id="step-done">
+              <div class="fp-done">
+                <div class="fp-tick">✓</div>
+                <h1 style="margin-top:0">Password updated</h1>
+                <p class="fp-sub">You can now sign in with your new password.</p>
+                <a class="fp-btn" href="index.html">Go to sign in</a>
+              </div>
+            </section>
+
+            <p class="fp-note">For your security, codes expire, work only once, and are locked after too many wrong attempts.</p>
+          </div>
         </div>
       </div>
-
-      <button type="submit" class="btn-primary" id="resetBtn">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="22" y1="2" x2="11" y2="13"></line>
-          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-        </svg>
-        Send reset link
-      </button>
-
-      <!-- dynamic feedback message (hidden by default) -->
-      <div id="feedbackMessage" class="feedback" role="alert" aria-live="polite">
-        <!-- filled via JS -->
-      </div>
-    </form>
-
-    <!-- back to login -->
-    <div class="back-link">
-      <a href="#" id="backToLogin">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-        <a href="index.html">Back to sign in</a>
     </div>
 
-    <!-- subtle hint (for demo / production can be removed) -->
-    
+    <div class="home-indicator"></div>
   </div>
+</main>
 
-  <script>
-    (function() {
-      const form = document.getElementById('resetForm');
-      const emailInput = document.getElementById('email');
-      const feedback = document.getElementById('feedbackMessage');
-      const backLink = document.getElementById('backToLogin');
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="config.js"></script>
+<script src="auth.js"></script>
+<script>
+/* ================= CONFIG (from config.js) ================= */
+const CFG = window.BIZLINK_CONFIG;
+const EJ = CFG.emailjs;
+const R = CFG.reset;
 
-      // Helper to set feedback message with icon
-      function setFeedback(type, message) {
-        // clear previous content and classes
-        feedback.className = 'feedback';
-        feedback.innerHTML = '';
+/* ================= HELPERS ================= */
+const $ = id => document.getElementById(id);
+const SKEY = 'bizlink_reset_session';
+const HKEY = 'bizlink_reset_sends';
+const enc = new TextEncoder();
+const timers = { resend: null };
+const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-        // create icon element based on type
-        let iconSvg = '';
-        if (type === 'success') {
-          iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`;
-        } else if (type === 'error') {
-          iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`;
-        }
+const emailOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+const maskEmail = e => { const [u, d] = e.split('@'); return (u.length <= 2 ? u[0] + '*' : u[0] + '*'.repeat(Math.min(u.length - 2, 5)) + u.slice(-1)) + '@' + d; };
 
-        feedback.innerHTML = iconSvg + `<span>${message}</span>`;
-        feedback.classList.add(type);
-      }
+function show(id, text, kind) { const el = $(id); el.className = 'fp-msg show ' + kind; el.textContent = text; }
+function hide(id) { $(id).className = 'fp-msg'; }
 
-      // Real-time validation helper
-      function validateEmail(email) {
-        if (!email.trim()) {
-          return 'Please enter your email address.';
-        }
-        // simple pattern: text@domain.tld
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email.trim())) {
-          return 'Enter a valid email address (e.g., name@domain.com).';
-        }
-        return null;
-      }
+function go(step) {
+  ['email', 'code', 'reset', 'done'].forEach(s => $('step-' + s).classList.toggle('active', s === step));
+  const n = { email: 1, code: 2, reset: 3, done: 3 }[step];
+  ['p1', 'p2', 'p3'].forEach((p, i) => $(p).classList.toggle('on', i < n));
+  const scroller = document.querySelector('.fp'); if (scroller) scroller.scrollTop = 0;
+}
 
-      // Clear feedback when user starts typing again
-      emailInput.addEventListener('input', function() {
-        if (feedback.classList.contains('success') || feedback.classList.contains('error')) {
-          feedback.className = 'feedback';
-          feedback.innerHTML = '';
-        }
-      });
+/* Secure random code (rejection sampling = no bias) */
+function secureCode(len) {
+  const max = 10 ** len, limit = Math.floor(0x100000000 / max) * max, buf = new Uint32Array(1);
+  let n;
+  do { crypto.getRandomValues(buf); n = buf[0]; } while (n >= limit);
+  return String(n % max).padStart(len, '0');
+}
+function randomHex(bytes) { const b = new Uint8Array(bytes); crypto.getRandomValues(b); return Array.from(b, x => x.toString(16).padStart(2, '0')).join(''); }
 
-      // handle form submission
-      form.addEventListener('submit', function(event) {
-        event.preventDefault(); // no page reload
+/* We never keep the plain code — only a salted SHA-256 hash of it */
+async function hashCode(code, salt, email) {
+  const buf = await crypto.subtle.digest('SHA-256', enc.encode(`${salt}:${email}:${code}`));
+  return Array.from(new Uint8Array(buf), x => x.toString(16).padStart(2, '0')).join('');
+}
+function safeEqual(a, b) { if (a.length !== b.length) return false; let r = 0; for (let i = 0; i < a.length; i++) r |= a.charCodeAt(i) ^ b.charCodeAt(i); return r === 0; }
 
-        const email = emailInput.value.trim();
-        const validationError = validateEmail(email);
+const loadSession = () => { try { return JSON.parse(sessionStorage.getItem(SKEY)); } catch (e) { return null; } };
+const saveSession = s => { try { sessionStorage.setItem(SKEY, JSON.stringify(s)); } catch (e) {} };
+const clearSession = () => { try { sessionStorage.removeItem(SKEY); } catch (e) {} };
 
-        if (validationError) {
-          setFeedback('error', validationError);
-          emailInput.focus();
-          return;
-        }
+function sendsLastHour() {
+  try { const now = Date.now(); const arr = (JSON.parse(localStorage.getItem(HKEY)) || []).filter(t => now - t < 3600000); localStorage.setItem(HKEY, JSON.stringify(arr)); return arr; } catch (e) { return []; }
+}
+function recordSend() { try { const arr = sendsLastHour(); arr.push(Date.now()); localStorage.setItem(HKEY, JSON.stringify(arr)); } catch (e) {} }
 
-        // Simulate a successful "reset link sent"
-        // In a real app, you would make an API call here.
-        setFeedback('success', `If an account exists for ${email}, a reset link will be sent.`);
+function startCooldown(sec) {
+  const btn = $('resend-btn'); clearInterval(timers.resend); let left = sec; btn.disabled = true;
+  const tick = () => { btn.textContent = left > 0 ? `Resend in ${left}s` : 'Resend code'; if (left <= 0) { btn.disabled = false; clearInterval(timers.resend); } left--; };
+  tick(); timers.resend = setInterval(tick, 1000);
+}
 
-        // (optional) clear the input field after success – nice UX
-        emailInput.value = '';
+/* ================= STEP 1: SEND CODE ================= */
+async function issueCode(email, msgId) {
+  if (!window.BizAuth || !BizAuth.supported()) { show(msgId, 'Open this page from https:// or http://localhost so secure features work.', 'err'); return false; }
+  await BizAuth.ready;
+  if ([EJ.publicKey, EJ.serviceId, EJ.resetTemplateId].some(v => !v || v.startsWith('YOUR_')) || !window.emailjs) {
+    show(msgId, 'Email service is not set up yet. Add your EmailJS keys in config.js.', 'err'); return false;
+  }
+  if (sendsLastHour().length >= R.maxSendsPerHour) { show(msgId, 'Too many requests. Please try again in an hour.', 'err'); return false; }
 
-        // we don't clear feedback so the user sees the confirmation.
-        // but we can blur input if needed
-        emailInput.blur();
+  const salt = randomHex(16);
+  const known = BizAuth.exists(email);
 
-        // Optionally, for demo, you could console.log the email.
-        // console.log(`Password reset requested for: ${email}`);
-      });
+  if (known) {
+    const code = secureCode(R.codeLength);
+    const hash = await hashCode(code, salt, email);
+    try {
+      await emailjs.send(EJ.serviceId, EJ.resetTemplateId, {
+        to_email: email, passcode: code, expiry_minutes: String(R.expiryMinutes), app_name: CFG.appName
+      }, { publicKey: EJ.publicKey });
+    } catch (err) {
+      console.error('EmailJS error', err);
+      show(msgId, 'We could not send the email. Please check your connection and try again.', 'err'); return false;
+    }
+    saveSession({ email, salt, hash, expires: Date.now() + R.expiryMinutes * 60000, attempts: 0, verified: false });
+  } else {
+    // Unknown email: send nothing, but behave exactly the same so nobody can learn which emails are registered.
+    await sleep(700 + Math.random() * 500);
+    saveSession({ email, salt, hash: randomHex(32), expires: Date.now() + R.expiryMinutes * 60000, attempts: 0, verified: false });
+  }
+  recordSend();
+  return true;
+}
 
-      // "Back to sign in" – simply show a friendly message (in real app, redirect)
-      backLink.addEventListener('click', function(event) {
-        event.preventDefault();
-        // Show a temporary feedback instead of redirect (since it's a demo)
-        // In production, replace with: window.location.href = '/login';
-        setFeedback('success', 'Redirecting to sign in page… (demo)');
-        // Clear feedback after 3 seconds
-        setTimeout(() => {
-          feedback.className = 'feedback';
-          feedback.innerHTML = '';
-        }, 3000);
-      });
+$('email-form').addEventListener('submit', async e => {
+  e.preventDefault(); hide('email-msg');
+  const email = $('email').value.trim().toLowerCase();
+  if (!emailOk(email)) { show('email-msg', 'Please enter a valid email address.', 'err'); return; }
+  const btn = $('send-btn'); btn.disabled = true; btn.textContent = 'Sending…';
+  const ok = await issueCode(email, 'email-msg');
+  btn.disabled = false; btn.textContent = 'Send verification code';
+  if (!ok) return;
+  $('masked-email').textContent = maskEmail(email);
+  $('exp-min').textContent = R.expiryMinutes;
+  go('code'); startCooldown(R.resendCooldownSec); clearBoxes(); $('c0').focus();
+});
 
-      // "silence" any other link clicks inside the card (just in case)
-      // also set proper autocomplete and a11y.
-      // but the rest is fine.
-    })();
-  </script>
+/* ================= STEP 2: VERIFY CODE ================= */
+const boxes = () => Array.from($('codes').querySelectorAll('input'));
+function clearBoxes() { boxes().forEach(b => b.value = ''); }
+function readCode() { return boxes().map(b => b.value).join(''); }
+
+boxes().forEach((b, i, all) => {
+  b.addEventListener('input', () => { b.value = b.value.replace(/\D/g, '').slice(-1); if (b.value && all[i + 1]) all[i + 1].focus(); });
+  b.addEventListener('keydown', e => { if (e.key === 'Backspace' && !b.value && all[i - 1]) all[i - 1].focus(); });
+  b.addEventListener('paste', e => {
+    const t = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, R.codeLength);
+    if (!t) return; e.preventDefault(); t.split('').forEach((ch, k) => { if (all[k]) all[k].value = ch; });
+    all[Math.min(t.length, all.length - 1)].focus();
+  });
+});
+
+$('code-form').addEventListener('submit', async e => {
+  e.preventDefault(); hide('code-msg');
+  const s = loadSession();
+  if (!s) { show('code-msg', 'Your session expired. Please request a new code.', 'err'); return; }
+  if (Date.now() > s.expires) { clearSession(); show('code-msg', 'This code has expired. Please request a new one.', 'err'); return; }
+  const code = readCode();
+  if (code.length !== R.codeLength) { show('code-msg', `Enter all ${R.codeLength} digits.`, 'err'); return; }
+
+  s.attempts++;
+  const hash = await hashCode(code, s.salt, s.email);
+  if (safeEqual(hash, s.hash)) {
+    s.verified = true; s.hash = ''; saveSession(s);      // one-time use: destroy the hash after success
+    go('reset'); $('pw1').focus();
+  } else if (s.attempts >= R.maxVerifyAttempts) {
+    clearSession(); clearBoxes();
+    show('code-msg', 'Too many incorrect attempts. This code has been cancelled. Please request a new one.', 'err');
+  } else {
+    saveSession(s); clearBoxes(); $('c0').focus();
+    show('code-msg', `Incorrect code. ${R.maxVerifyAttempts - s.attempts} attempt(s) left.`, 'err');
+  }
+});
+
+$('resend-btn').addEventListener('click', async () => {
+  const s = loadSession(); const email = s ? s.email : $('email').value.trim().toLowerCase();
+  if (!emailOk(email)) { go('email'); return; }
+  hide('code-msg'); $('resend-btn').disabled = true;
+  const ok = await issueCode(email, 'code-msg');
+  if (ok) { clearBoxes(); $('c0').focus(); show('code-msg', 'A new code has been sent. The previous code no longer works.', 'info'); startCooldown(R.resendCooldownSec); }
+  else { startCooldown(5); }
+});
+
+$('change-email').addEventListener('click', () => { clearSession(); clearBoxes(); hide('code-msg'); go('email'); $('email').focus(); });
+
+/* ================= STEP 3: NEW PASSWORD ================= */
+$('pw1').addEventListener('input', () => {
+  const v = $('pw1').value;
+  document.querySelectorAll('#rules li').forEach(li => li.classList.toggle('ok', BizAuth.rules[li.dataset.r](v)));
+});
+document.querySelectorAll('[data-toggle]').forEach(b => b.addEventListener('click', () => {
+  const i = $(b.dataset.toggle); const hidden = i.type === 'password'; i.type = hidden ? 'text' : 'password'; b.textContent = hidden ? 'Hide' : 'Show';
+}));
+
+$('reset-form').addEventListener('submit', async e => {
+  e.preventDefault(); hide('reset-msg');
+  const s = loadSession();
+  if (!s || !s.verified || Date.now() > s.expires) { clearSession(); go('email'); show('email-msg', 'Your session expired. Please start again.', 'err'); return; }
+  const p1 = $('pw1').value, p2 = $('pw2').value;
+  if (!BizAuth.passwordOk(p1)) { show('reset-msg', 'Your password does not meet all the requirements.', 'err'); return; }
+  if (p1 !== p2) { show('reset-msg', 'Passwords do not match.', 'err'); return; }
+
+  const btn = $('reset-btn'); btn.disabled = true; btn.textContent = 'Saving…';
+  try {
+    if (await BizAuth.verify(s.email, p1)) { show('reset-msg', 'Please choose a password different from your current one.', 'err'); return; }
+    const saved = await BizAuth.setPassword(s.email, p1);
+    if (!saved) throw new Error('No account for this email');
+    clearSession();
+    try { sessionStorage.setItem('bizlink_reset_done', s.email); } catch (err) {}   // lets the sign-in screen pre-fill the email
+    $('pw1').value = ''; $('pw2').value = ''; go('done');
+  } catch (err) {
+    console.error(err); show('reset-msg', 'Could not update your password. Please start again.', 'err');
+  } finally { btn.disabled = false; btn.textContent = 'Reset password'; }
+});
+
+/* ================= START ================= */
+if (window.emailjs && EJ.publicKey && !EJ.publicKey.startsWith('YOUR_')) emailjs.init({ publicKey: EJ.publicKey });
+const pre = new URLSearchParams(location.search).get('email');
+if (pre) $('email').value = pre;
+</script>
 </body>
 </html>
